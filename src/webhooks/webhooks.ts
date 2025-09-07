@@ -37,9 +37,9 @@ export class Webhooks {
   }): Promise<Event> {
     const options = { payload, sigHeader, secret, tolerance };
     await this.verifyHeader(options);
-
+    payload = typeof payload === 'string' ? JSON.parse(payload) : payload;
     const webhookPayload = payload as EventResponse;
-
+    
     return deserializeEvent(webhookPayload);
   }
 }

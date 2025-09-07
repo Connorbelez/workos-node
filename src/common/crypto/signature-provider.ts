@@ -65,7 +65,9 @@ export class SignatureProvider {
     payload: any,
     secret: string,
   ): Promise<string> {
-    payload = JSON.stringify(payload);
+    if (typeof payload === 'object') {
+      payload = JSON.stringify(payload);
+    }
     const signedPayload = `${timestamp}.${payload}`;
 
     return await this.cryptoProvider.computeHMACSignatureAsync(
